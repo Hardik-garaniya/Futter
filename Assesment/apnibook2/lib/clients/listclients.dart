@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../api.dart';
 import 'addclients.dart';
-import 'package:apnibook2/clients/updateclient.dart';
+import 'updateclient.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class ClientListScreen extends StatefulWidget {
   @override
@@ -20,6 +23,33 @@ class _ClientListScreenState extends State<ClientListScreen> {
   void initState() {
     super.initState();
     fetchClients();
+  }
+
+  Future<void> generateClientPdf(List clients) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Client List', style: pw.TextStyle(fontSize: 24)),
+            pw.SizedBox(height: 10),
+            ...clients.map((client) {
+              return pw.Container(
+                margin: pw.EdgeInsets.symmetric(vertical: 4),
+                child: pw.Text(
+                  "Name: ${client['name']} | Contact: ${client['contact']} | Email: ${client['email']}",
+                  style: pw.TextStyle(fontSize: 14),
+                ),
+              );
+            }).toList(),
+          ],
+        ),
+      ),
+    );
+
+    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
   }
 
   @override
@@ -46,21 +76,21 @@ class _ClientListScreenState extends State<ClientListScreen> {
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               title: Text(
                 clients[index]['name'],
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Contact: ${clients[index]['contact']}"),
-                  Text("Email: ${clients[index]['email']}"),
-                  Text("Address: ${clients[index]['address']}"),
+                  Text("Contact: ${clients[index]['contact']}", style: TextStyle(color: Colors.white70)),
+                  Text("Email: ${clients[index]['email']}", style: TextStyle(color: Colors.white70)),
+                  Text("Address: ${clients[index]['address']}", style: TextStyle(color: Colors.white70)),
                 ],
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit, color: Colors.blue),
+                    icon: Icon(Icons.edit, color: Colors.white),
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -69,7 +99,7 @@ class _ClientListScreenState extends State<ClientListScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: Icon(Icons.delete, color: Colors.redAccent),
                     onPressed: () => ApiService.deleteClient(
                       clients[index]['id'].toString(),
                       fetchClients,
@@ -81,13 +111,27 @@ class _ClientListScreenState extends State<ClientListScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AddClientScreen()),
-        ),
-        child: Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'add',
+            backgroundColor: Colors.green,
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => AddClientScreen()));
+            },
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            heroTag: 'pdf',
+            backgroundColor: Colors.red,
+            child: Icon(Icons.picture_as_pdf),
+            onPressed: () {
+              generateClientPdf(clients);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'dart:convert';
 
 class ApiService {
 
-
   static Future<List> getClients() async {
     var url = Uri.parse("https://prakrutitech.buzz/HardikAPI/getclient.php");
     var resp = await http.get(url);

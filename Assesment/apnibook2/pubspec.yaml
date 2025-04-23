@@ -38,10 +38,11 @@ dependencies:
   http: ^0.13.4  # For API calls
   provider: ^6.0.5  # For state management
   shared_preferences: ^2.0.15  # For storing user data locally
-  pdf: ^3.8.4  # For generating PDFs (if needed)
   path_provider: ^2.0.11  # For file storage access
   url_launcher: ^6.1.10  # For opening URLs
   intl: ^0.18.0
+  pdf: ^3.10.4
+  printing: ^5.11.0
 
 dev_dependencies:
   flutter_test:
