@@ -4,7 +4,6 @@ import '../firebase.dart';
 import '../model/cash.dart';
 
 class CalculatorTab extends StatefulWidget {
-  const CalculatorTab({super.key});
 
   @override
   State<CalculatorTab> createState() => _CalculatorTabState();
@@ -66,7 +65,7 @@ class _CalculatorTabState extends State<CalculatorTab> {
   void saveToFirebase() async {
     if (descriptionController.text.trim().isEmpty || total == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter description and amount")),
+         SnackBar(content: Text("Please enter description and amount")),
       );
       return;
     }
@@ -85,7 +84,7 @@ class _CalculatorTabState extends State<CalculatorTab> {
     await FirebaseService().addRecord(model);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Record added!")),
+       SnackBar(content: Text("Record added!")),
     );
 
     clearAll();
@@ -97,13 +96,13 @@ class _CalculatorTabState extends State<CalculatorTab> {
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding:  EdgeInsets.all(12.0),
           child: Column(
             children: [
               TextField(
                 controller: descriptionController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
+                style: TextStyle(color: Colors.white),
+                decoration:  InputDecoration(
                   labelText: "Description",
                   labelStyle: TextStyle(color: Colors.white70),
                   border: OutlineInputBorder(),
@@ -115,10 +114,10 @@ class _CalculatorTabState extends State<CalculatorTab> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+               SizedBox(height: 10),
               ListView.builder(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics:  NeverScrollableScrollPhysics(),
                 itemCount: denominations.length,
                 itemBuilder: (context, index) {
                   final denom = denominations[index];
@@ -129,21 +128,21 @@ class _CalculatorTabState extends State<CalculatorTab> {
                       children: [
                         Text(
                           "$denom x",
-                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                          style:  TextStyle(color: Colors.white, fontSize: 16),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
                           child: TextField(
                             controller: controllers[denom],
                             keyboardType: TextInputType.number,
                             onChanged: (_) => calculateTotal(),
-                            style: const TextStyle(color: Colors.white),
+                            style:  TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               hintText: "0",
-                              hintStyle: const TextStyle(color: Colors.white54),
+                              hintStyle:  TextStyle(color: Colors.white54),
                               filled: true,
                               fillColor: Colors.grey[850],
-                              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                              contentPadding:  EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: BorderSide.none,
@@ -156,12 +155,12 @@ class _CalculatorTabState extends State<CalculatorTab> {
                   );
                 },
               ),
-              const SizedBox(height: 10),
+               SizedBox(height: 10),
               Text("Total: ₹$total",
-                  style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+                  style:  TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
               Text("Notes: $noteCount",
-                  style: const TextStyle(fontSize: 16, color: Colors.white70)),
-              const SizedBox(height: 10),
+                  style:  TextStyle(fontSize: 16, color: Colors.white70)),
+               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -169,17 +168,17 @@ class _CalculatorTabState extends State<CalculatorTab> {
                     onPressed: clearAll,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.redAccent[400],
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                     ),
-                    child: const Text("Clear", style: TextStyle(fontSize: 16)),
+                    child:  Text("Clear", style: TextStyle(fontSize: 16)),
                   ),
                   ElevatedButton(
                     onPressed: saveToFirebase,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.tealAccent[700],
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      padding:  EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                     ),
-                    child: const Text("Save", style: TextStyle(fontSize: 16)),
+                    child:  Text("Save", style: TextStyle(fontSize: 16)),
                   ),
                 ],
               ),

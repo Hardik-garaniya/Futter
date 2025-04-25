@@ -5,7 +5,7 @@ import '../model/cash.dart';
 class EditDialog extends StatefulWidget {
   final CashModel model;
 
-  const EditDialog({super.key, required this.model});
+   EditDialog({super.key, required this.model});
 
   @override
   State<EditDialog> createState() => _EditDialogState();
@@ -30,11 +30,11 @@ class _EditDialogState extends State<EditDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.black87,
-      title: const Text("Edit Record", style: TextStyle(color: Colors.white)),
+      title: Text("Edit Record", style: TextStyle(color: Colors.white)),
       content: TextField(
         controller: descriptionController,
-        style: const TextStyle(color: Colors.white),
-        decoration: const InputDecoration(
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
           labelText: "Description",
           labelStyle: TextStyle(color: Colors.white70),
           border: OutlineInputBorder(),
@@ -56,15 +56,15 @@ class _EditDialogState extends State<EditDialog> {
               await FirebaseService().updateRecord(updatedModel);
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Record updated")),
+                 SnackBar(content: Text("Record updated")),
               );
             }
           },
-          child: const Text("Update"),
+          child:  Text("Update"),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+          child:  Text("Cancel", style: TextStyle(color: Colors.red)),
         ),
       ],
     );

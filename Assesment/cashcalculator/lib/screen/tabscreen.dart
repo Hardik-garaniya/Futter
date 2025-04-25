@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'addscreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,12 +16,12 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             "Cash Calculator",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
           ),
           backgroundColor: Colors.grey[900],
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: Colors.tealAccent,
             tabs: [
               Tab(text: "Calculator"),
@@ -33,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body:  TabBarView(
           children: [
             CalculatorTab(),
-            ViewScreen(), // View logic shown below
+            ViewScreen(),
           ],
         ),
       ),
